@@ -7,4 +7,17 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony \
 && chmod a+x /usr/local/bin/symfony
 
+RUN apt-get update && apt-get install -y \
+libpq-dev \
+libmemcached-dev \
+libpng-dev \
+curl \
+--no-install-recommends \
+&& rm -r /var/lib/apt/lists/*
+
+RUN docker-php-ext-install \
+pdo_mysql \
+pdo_pgsql \
+gd
+
 WORKDIR /var/www
